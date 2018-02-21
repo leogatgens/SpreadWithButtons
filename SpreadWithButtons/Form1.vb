@@ -21,24 +21,42 @@
 
         GenerarCeldas()
 
-        GenerarFiltrosCustoms()
+        EnableDefaultFilters()
+        EnableCustomFilter()
     End Sub
 
-    Private Sub GenerarFiltrosCustoms()
-        'Display only custom filters created in Column1.
-        Dim fcd As New FarPoint.Win.Spread.FilterColumnDefinition(2, FarPoint.Win.Spread.FilterListBehavior.Custom)
+    Private Sub EnableDefaultFilters()
+        FpSpread1.ActiveSheet.ColumnHeaderVisible = True
+        Dim hideRowFilter As New FarPoint.Win.Spread.HideRowFilter(FpSpread1.ActiveSheet)
+        FpSpread1.ActiveSheet.Columns(0, 2).AllowAutoFilter = True
+        FpSpread1.ActiveSheet.AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.FilterGadget
+    End Sub
+
+    Private Sub EnableCustomFilter()
+        ''Display only custom filters created in Column1.
+        Dim fcdBoton As New FarPoint.Win.Spread.FilterColumnDefinition(4, FarPoint.Win.Spread.FilterListBehavior.Custom)
+
+
+        Dim fcd As New FarPoint.Win.Spread.FilterColumnDefinition(1, FarPoint.Win.Spread.FilterListBehavior.SortByMostOccurrences Or FarPoint.Win.Spread.FilterListBehavior.Default)
+        Dim fcd1 As New FarPoint.Win.Spread.FilterColumnDefinition(2)
+        Dim fcd2 As New FarPoint.Win.Spread.FilterColumnDefinition
         Dim hf As New FarPoint.Win.Spread.HideRowFilter(FpSpread1.ActiveSheet)
         hf.AddColumn(fcd)
+        hf.AddColumn(fcd)
+        hf.AddColumn(fcd1)
+        hf.AddColumn(fcdBoton)
+
         FpSpread1.ActiveSheet.RowFilter = hf
+        FpSpread1.ActiveSheet.AutoFilterMode = FarPoint.Win.Spread.AutoFilterMode.EnhancedContextMenu
 
+        ''Add the custom filter created for Column1.
 
-        Dim ccd As FarPoint.Win.Spread.FilterColumnDefinition = FpSpread1.ActiveSheet.RowFilter.GetFilterColumnDefinition(2)
-        'Add the custom filter created for Column1.
-        For i = 0 To Me.FpSpread1.ActiveSheet.Rows.Count - 1
-            Dim cfi As New CustomFilterButton(FpSpread1.ActiveSheet)
-            ccd.Filters.Add(cfi)
+        Dim ccd As FarPoint.Win.Spread.FilterColumnDefinition = FpSpread1.ActiveSheet.RowFilter.GetFilterColumnDefinition(4)
+        Dim cfi As New CustomFilterButton(FpSpread1.ActiveSheet, "Text Button")
+        Dim cfi2 As New CustomFilterButton(FpSpread1.ActiveSheet, "Test")
 
-        Next
+        ccd.Filters.Add(cfi)
+        ccd.Filters.Add(cfi2)
 
 
 
@@ -59,22 +77,21 @@
 
 
 
+
+
         For i = 0 To Me.FpSpread1.ActiveSheet.Rows.Count - 1
-
-            If i < 20 Then
-                Dim prctcell As New FarPoint.Win.Spread.CellType.ButtonCellType()
-                FpSpread1.ActiveSheet.Cells(i, 2).CellType = prctcell
-
+            Dim prctcell As New FarPoint.Win.Spread.CellType.ButtonCellType()
+            If i < 10 Then
                 prctcell.Text = "Text Button"
 
-                'Else
+            Else
 
-                '    FpSpread1.ActiveSheet.Cells(i, 2).Text = "Hola"
+                prctcell.Text = "Test"
 
             End If
 
-
-
+            FpSpread1.ActiveSheet.Cells(i, 4).CellType = prctcell
+            FpSpread1.ActiveSheet.SetValue(i, 1, 69)
         Next
     End Sub
 

@@ -6,12 +6,14 @@
     Inherits FarPoint.Win.Spread.BaseFilterItem
 
     Dim sv As FarPoint.Win.Spread.SheetView = Nothing
+    Private DisplayNameLocal As String
 
     Public Sub New()
     End Sub
 
-    Public Sub New(ByVal sheetView As FarPoint.Win.Spread.SheetView)
+    Public Sub New(ByVal sheetView As FarPoint.Win.Spread.SheetView, ByVal displayName As String)
         Me.sv = sheetView
+        Me.DisplayNameLocal = displayName
     End Sub
 
     '---------------------------------------------------------
@@ -19,18 +21,7 @@
     '---------------------------------------------------------
     Public Overrides ReadOnly Property DisplayName() As String
         Get
-            Dim list As New ArrayList
-            Dim lista2 As New System.Text.StringBuilder()
-
-
-
-
-
-
-
-
-            Return "FiltrarBoton"
-
+            Return DisplayNameLocal
         End Get
     End Property
 
@@ -47,7 +38,7 @@
     'Evaluate specified values by particular conditions.
     '-----------------------------------------------------------------------------------------
     Public Function IsFilteredIn(ByVal value As String) As Boolean
-        If (value = "Hola") Then
+        If (value = DisplayNameLocal) Then
             'Return True only when the following conditions are satisfied.
             '(1)Values are entered.
             '(2)Values are not lower than 10.
