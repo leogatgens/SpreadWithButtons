@@ -48,7 +48,9 @@ Public Class form1
 
 
 
-
+        'Dim im2 As FarPoint.Win.Spread.InputMap = New FarPoint.Win.Spread.InputMap()
+        'im2 = FpSpread1.GetInputMap(FarPoint.Win.Spread.InputMapMode.WhenFocused)
+        'im2.Put(New FarPoint.Win.Spread.Keystroke(Keys.Enter, Keys.None), FarPoint.Win.Spread.SpreadActions.None)
 
 
 
@@ -60,6 +62,7 @@ Public Class form1
         If (e.KeyCode = Keys.[Return]) AndAlso (TypeOf FpSpread1.ActiveSheet.ActiveCell.CellType Is ButtonCellType) Then
             FpSpread1_ButtonClicked(sender, New FarPoint.Win.Spread.EditorNotifyEventArgs(FpSpread1.GetRootWorkbook(), Nothing, FpSpread1.ActiveSheet.ActiveRowIndex, FpSpread1.ActiveSheet.ActiveColumnIndex))
             FpSpread1.StopCellEditing()
+            e.Handled = True
         End If
     End Sub
 
@@ -90,6 +93,7 @@ Public Class form1
 
 
 
+
                 If i < 10 Then
                     bttncell.Text = "Text Button"
                     FpSpread1.Sheets(index).Cells(i, j).Value = bttncell.Text
@@ -102,6 +106,7 @@ Public Class form1
                 End If
 
                 FpSpread1.Sheets(index).Cells(i, j).CellType = bttncell
+                FpSpread1.Sheets(1).Cells(i, j).CellPadding = New CellPadding(5)
                 'FpSpread1.Sheets(0).Cells(i, 5).CellType = prctcell
                 'FpSpread1.Sheets(index).SetValue(i, 1, 69 + i)
 
@@ -125,6 +130,8 @@ Public Class form1
         FpSpread1.ActiveSheet.Cells(e.Row, e.Column).CellType = prctcell
         prctcell.Text = texto
         hoja.ActiveSheet.SetValue(e.Row, e.Column, texto)
+
+        MsgBox("Eso lo lograste")
     End Sub
 #Region "Sheet1"
 
