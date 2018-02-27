@@ -19,6 +19,11 @@ Public Class form1
         hoja1.RowCount = 500
         hoja1.ColumnCount = 70
 
+        Dim columnobj As FarPoint.Win.Spread.Column
+        columnobj = hoja1.Columns(0, 3)
+        columnobj.Locked = True
+        '        hoja1.OperationMode = OperationMode.ReadOnly
+
         Dim hoja2 As New FarPoint.Win.Spread.SheetView
         hoja2.RowCount = 500
         hoja2.ColumnCount = 70
@@ -72,6 +77,7 @@ Public Class form1
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Sheet1
         GenerateCells(0)
+        GenerateText(0)
         EnableDefaultFilters()
         EnableCustomFilter()
 
@@ -80,6 +86,18 @@ Public Class form1
         Sheet2Test()
 
     End Sub
+
+    Private Sub GenerateText(index)
+        For i = 0 To Me.FpSpread1.Sheets(index).Rows.Count - 1
+            For j = 0 To 3
+                Me.FpSpread1.ActiveSheet.Cells(i, j).Text = "Hola"
+
+
+            Next
+
+        Next
+    End Sub
+
 
     Private Sub GenerateCells(index)
         For i = 0 To Me.FpSpread1.Sheets(index).Rows.Count - 1
