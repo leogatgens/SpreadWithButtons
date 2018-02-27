@@ -20,7 +20,7 @@ Public Class form1
         hoja1.ColumnCount = 70
 
         Dim columnobj As FarPoint.Win.Spread.Column
-        columnobj = hoja1.Columns(0, 3)
+        columnobj = hoja1.Columns(0, 10)
         columnobj.Locked = True
         '        hoja1.OperationMode = OperationMode.ReadOnly
 
