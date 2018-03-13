@@ -21,12 +21,15 @@ Public Class form1
 
         Dim columnobj As FarPoint.Win.Spread.Column
         columnobj = hoja1.Columns(0, 10)
-        columnobj.Locked = True
+        'columnobj.Locked = True
         '        hoja1.OperationMode = OperationMode.ReadOnly
 
         Dim hoja2 As New FarPoint.Win.Spread.SheetView
         hoja2.RowCount = 500
         hoja2.ColumnCount = 70
+        Dim columnasHoja2 As FarPoint.Win.Spread.Column
+        columnasHoja2 = hoja2.Columns(0, 20)
+        'columnasHoja2.Locked = True
         FpSpread1.Sheets.Add(hoja1)
         FpSpread1.Sheets.Add(hoja2)
 
@@ -37,7 +40,39 @@ Public Class form1
         AddHandler FpSpread1.ButtonClicked, handler
         AddHandler FpSpread1.KeyDown, AddressOf manejoEnter
 
+
+
         'AddHandler FpSpread1.Enter, handler
+        Dim eh As FarPoint.Win.Spread.EditModeStartingEventHandler = AddressOf FpSpread1EditModeStarting
+        AddHandler FpSpread1.EditModeStarting, eh
+
+        AddHandler FpSpread1.EditModeOff, AddressOf ManejoEditModeOff
+        AddHandler FpSpread1.EditModeOn, AddressOf ManejoEditModeOn
+        AddHandler FpSpread1.EditChange, AddressOf ManejoEditChange
+        AddHandler FpSpread1.MouseDown, AddressOf ManejoMouseDown
+        AddHandler FpSpread1.SelectionChanged, AddressOf ManejoSelectionChanged
+        AddHandler FpSpread1.ActiveSheetChanging, AddressOf ManejoActiveSheetChanging
+        AddHandler FpSpread1.ActiveSheetChanged, AddressOf ManejoActiveSheetChanged
+        AddHandler FpSpread1.ActiveSheetChanging, AddressOf ManejoSelectionChanging
+        AddHandler FpSpread1.LeaveCell, AddressOf ManejoLeaveCell
+        AddHandler FpSpread1.Change, AddressOf ManejoChange
+        AddHandler FpSpread1.DragFillBlock, AddressOf ManejoDragFillBlock
+        AddHandler FpSpread1.DragFillBlockCompleted, AddressOf ManejoDragFillBlockCompleted
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -62,6 +97,71 @@ Public Class form1
 
     End Sub
 
+    Private Sub ManejoDragFillBlockCompleted(sender As Object, e As DragFillBlockCompletedEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+
+    End Sub
+
+    Private Sub ManejoDragFillBlock(sender As Object, e As DragFillBlockEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoChange(sender As Object, e As ChangeEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoLeaveCell(sender As Object, e As LeaveCellEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoSelectionChanging(sender As Object, e As ActiveSheetChangingEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoActiveSheetChanged(sender As Object, e As ActiveSheetChangingEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoActiveSheetChanging(sender As Object, e As ActiveSheetChangingEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoSelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub ManejoMouseDown(sender As Object, e As MouseEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Value)
+
+        FpSpread1.StopCellEditing()
+    End Sub
+
+    Private Sub ManejoEditChange(sender As Object, e As EditorNotifyEventArgs)
+        Debug.WriteLine(System.Reflection.MethodInfo.GetCurrentMethod.Name.ToString + ": " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+
+
+    Private Sub ManejoEditModeOn(sender As Object, e As EventArgs)
+        Debug.WriteLine("ManejoEditModeOn: " + FpSpread1.ActiveSheet.ActiveCell.Text)
+
+
+        'Dim prctcell As New FarPoint.Win.Spread.CellType.ButtonCellType()
+        'FpSpread1.ActiveSheet.ActiveCell.CellType = prctcell
+        'prctcell.Text = "GAto"
+        'FpSpread1.ActiveSheet.ActiveCell.Value = "GAto"
+
+    End Sub
+
+    Private Sub ManejoEditModeOff(sender As Object, e As EventArgs)
+        Debug.WriteLine("ManejoEditModeOff: " + FpSpread1.ActiveSheet.ActiveCell.Text)
+    End Sub
+
+    Private Sub FpSpread1EditModeStarting(sender As Object, e As EditModeStartingEventArgs)
+        Debug.WriteLine("FpSpread1EditModeStarting: " + FpSpread1.ActiveSheet.ActiveCell.Text)
+
+        'e.Cancel = True
+    End Sub
 
     Private Sub manejoEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         If (e.KeyCode = Keys.[Return]) AndAlso (TypeOf FpSpread1.ActiveSheet.ActiveCell.CellType Is ButtonCellType) Then
@@ -103,6 +203,8 @@ Public Class form1
         For i = 0 To Me.FpSpread1.Sheets(index).Rows.Count - 1
             For j = 4 To Me.FpSpread1.Sheets(index).columns.Count - 1
                 Dim bttncell As New FarPoint.Win.Spread.CellType.ButtonCellType()
+                AddHandler bttncell.EditingCanceled, AddressOf PruebaParar
+
                 bttncell.BackgroundStyle = FarPoint.Win.BackStyle.Gradient
                 bttncell.ButtonColor = Color.Yellow
                 bttncell.ButtonColor2 = Color.Orange
@@ -116,6 +218,7 @@ Public Class form1
                     bttncell.Text = "Text Button"
                     FpSpread1.Sheets(index).Cells(i, j).Value = bttncell.Text
 
+
                 Else
 
                     bttncell.Text = "Test"
@@ -123,7 +226,9 @@ Public Class form1
 
                 End If
 
+
                 FpSpread1.Sheets(index).Cells(i, j).CellType = bttncell
+                FpSpread1.Sheets(index).Cells(i, j).Locked = False
                 FpSpread1.Sheets(1).Cells(i, j).CellPadding = New CellPadding(5)
                 'FpSpread1.Sheets(0).Cells(i, 5).CellType = prctcell
                 'FpSpread1.Sheets(index).SetValue(i, 1, 69 + i)
@@ -133,23 +238,28 @@ Public Class form1
         Next
     End Sub
 
+    Private Function PruebaParar(ByVal sender As Object, ByVal e As EventArgs) As EventHandler
+        Debug.WriteLine("Cancelo Edicion:" + FpSpread1.ActiveSheet.ActiveCell.Text)
+
+    End Function
+
     Private Sub FpSpread1_ButtonClicked(ByVal sender As Object, ByVal e As FarPoint.Win.Spread.EditorNotifyEventArgs) Handles FpSpread1.ButtonClicked
         'Dim algo = e.EditingControl
         'algo.Text = "adfsssssssssssss"
 
         Dim hoja = DirectCast(sender, FpSpread)
 
-        Dim prctcell As New FarPoint.Win.Spread.CellType.ButtonCellType()
+        'Dim prctcell As New FarPoint.Win.Spread.CellType.ButtonCellType()
 
-        Dim texto As String = "OJO"
+        'Dim texto As String = "OJO"
 
+        Debug.WriteLine("Enter en boton")
 
+        'FpSpread1.ActiveSheet.Cells(e.Row, e.Column).CellType = prctcell
+        'prctcell.Text = texto
+        'hoja.ActiveSheet.SetValue(e.Row, e.Column, "pato")
 
-        FpSpread1.ActiveSheet.Cells(e.Row, e.Column).CellType = prctcell
-        prctcell.Text = texto
-        hoja.ActiveSheet.SetValue(e.Row, e.Column, texto)
-
-        MsgBox("Eso lo lograste")
+        'MsgBox("Eso lo lograste")
     End Sub
 #Region "Sheet1"
 
@@ -244,3 +354,12 @@ Class algo
 
     End Sub
 End Class
+
+
+
+
+
+
+
+
+
