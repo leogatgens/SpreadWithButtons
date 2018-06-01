@@ -93,7 +93,7 @@ Public Class form1
         'im2.Put(New FarPoint.Win.Spread.Keystroke(Keys.Enter, Keys.None), FarPoint.Win.Spread.SpreadActions.None)
 
 
-
+        FpSpread1.ActiveSheet.FrozenColumnCount = 10
 
     End Sub
 
@@ -169,6 +169,8 @@ Public Class form1
             FpSpread1.StopCellEditing()
             e.Handled = True
         End If
+
+        FpSpread1.ActiveSheet.FrozenColumnCount = 0
     End Sub
 
 
