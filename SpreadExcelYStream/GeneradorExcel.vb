@@ -48,11 +48,12 @@ Public Class GeneradorExcel
         dataModel = libroSpread.ActiveSheet.Models.Data
         dataModel.ColumnCount = 5
         dataModel.RowCount = 5
-        dataModel.SetValue(0, 0, "Not Empty")
-        dataModel.SetValue(3, 0, "Not Empty")
-        dataModel.SetFormula(0, 1, "SUM(A1:A3)")
+        'dataModel.SetValue(0, 0, "Not Empty")
+        'dataModel.SetValue(3, 0, "Not Empty")
+        'dataModel.SetFormula(0, 1, "SUM(A1:A3)")
 
-        dataModel.SetFormula(1, 1, "SUM(A3:A4)")
+        libroSpread.ActiveSheet.SetFormula(1, 1, "10/0")
+
 
         dataModel.SetFormula(4, 4, "SUM(A3:A20)")
 
@@ -62,13 +63,15 @@ Public Class GeneradorExcel
         Dim algo = dataModel.NextNonEmptyColumnFormula(0)
 
 
-        RecorrerFormulasDeHoja(libroSpread.ActiveSheet)
+        'RecorrerFormulasDeHoja(libroSpread.ActiveSheet)
+        RecorrerErroresDeHoja(libroSpread.ActiveSheet)
+        'RecorrerTextosDeHoja(libroSpread.ActiveSheet)
     End Sub
 
 
     Private Sub RecorrerFormulasDeHoja(ByVal sheet As SheetView)
 
-        Dim enumerator As DefaultSheetDataModel.DefaultSheetDataModelEnumerator = (CType(sheet.Models.Data, DefaultSheetDataModel)).EnumErrorText
+        Dim enumerator As DefaultSheetDataModel.DefaultSheetDataModelEnumerator = (CType(sheet.Models.Data, DefaultSheetDataModel)).EnumFormulas
         Dim indiceInicial As Integer = enumerator.NextNonEmptyRow(-1)
 
         While indiceInicial <> -1
@@ -77,6 +80,55 @@ Public Class GeneradorExcel
             While proximoIndiceColumna <> -1
                 Dim expr As String = sheet.GetFormula(indiceInicial, proximoIndiceColumna)
                 sheet.Cells(indiceInicial, proximoIndiceColumna).Formula = ""
+                proximoIndiceColumna = enumerator.NextNonEmptyColumnInRow(indiceInicial, proximoIndiceColumna)
+            End While
+
+            indiceInicial = enumerator.NextNonEmptyRow(indiceInicial)
+        End While
+    End Sub
+
+    Private Sub RecorrerTextosDeHoja(ByVal sheet As SheetView)
+
+        Dim enumerator As DefaultSheetDataModel.DefaultSheetDataModelEnumerator = (CType(sheet.Models.Data, DefaultSheetDataModel)).EnumValues
+        Dim indiceInicial As Integer = enumerator.NextNonEmptyRow(-1)
+
+        While indiceInicial <> -1
+            Dim proximoIndiceColumna As Integer = enumerator.NextNonEmptyColumnInRow(indiceInicial, -1)
+
+            While proximoIndiceColumna <> -1
+                Dim expr As String = sheet.GetText(indiceInicial, proximoIndiceColumna)
+
+                proximoIndiceColumna = enumerator.NextNonEmptyColumnInRow(indiceInicial, proximoIndiceColumna)
+            End While
+
+            indiceInicial = enumerator.NextNonEmptyRow(indiceInicial)
+        End While
+    End Sub
+
+    Private Sub RecorrerErroresDeHoja(ByVal sheet As SheetView)
+
+        Dim instance As DefaultSheetDataModel = CType(sheet.Models.Data, DefaultSheetDataModel)
+        Dim value As Integer
+
+        value = instance.GetNonEmptyErrorTextsColumnCount()
+
+        Dim enumerator As DefaultSheetDataModel.DefaultSheetDataModelEnumerator = (CType(sheet.Models.Data, DefaultSheetDataModel)).EnumFormulas
+
+        Dim indiceInicial As Integer = enumerator.NextNonEmptyRow(-1)
+
+        While indiceInicial <> -1
+            Dim proximoIndiceColumna As Integer = enumerator.NextNonEmptyColumnInRow(indiceInicial, -1)
+
+            While proximoIndiceColumna <> -1
+                Dim expr = sheet.GetValue(indiceInicial, proximoIndiceColumna)
+                If TypeOf expr Is CalcError Then
+                    Dim algo = expr.ToString
+
+
+                End If
+
+
+
                 proximoIndiceColumna = enumerator.NextNonEmptyColumnInRow(indiceInicial, proximoIndiceColumna)
             End While
 

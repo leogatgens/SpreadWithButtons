@@ -14,6 +14,9 @@
     End Sub
 
     Private Sub BtnGenerar_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
+
+
         Dim generaExcel As GeneradorExcel = New GeneradorExcel
 
         generaExcel.GenerarArchivoExcelDesdeSpread()
@@ -22,4 +25,7 @@
 
     End Sub
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FpSpread1.AllowUserFormulas = True
+    End Sub
 End Class
