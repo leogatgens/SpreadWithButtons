@@ -1,7 +1,7 @@
 ﻿Imports FarPoint.Win.Spread
 Imports FarPoint.Win.Spread.CellType
 
-Public Class form1
+Public Class Form1
 
 
     Dim WithEvents FpSpread1 As New FarPoint.Win.Spread.FpSpread()

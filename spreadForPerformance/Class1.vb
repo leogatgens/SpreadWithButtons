@@ -1,4 +1,5 @@
-﻿Imports FarPoint.Win.Spread
+﻿Imports FarPoint.CalcEngine
+Imports FarPoint.Win.Spread
 Imports FarPoint.Win.Spread.Model
 
 Public Class Class1

@@ -9,6 +9,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "spreadForPerformance", "spr
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpreadStreamYExcel", "SpreadStreamYExcel\SpreadStreamYExcel.vbproj", "{0DE50DED-15EE-4C29-9DCF-394E694EC897}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataSoruceSpread", "DataSoruceSpread\DataSoruceSpread.vbproj", "{896100B3-40F9-4AB1-97DD-7A2626B0D342}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0DE50DED-15EE-4C29-9DCF-394E694EC897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE50DED-15EE-4C29-9DCF-394E694EC897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE50DED-15EE-4C29-9DCF-394E694EC897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896100B3-40F9-4AB1-97DD-7A2626B0D342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896100B3-40F9-4AB1-97DD-7A2626B0D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896100B3-40F9-4AB1-97DD-7A2626B0D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896100B3-40F9-4AB1-97DD-7A2626B0D342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
