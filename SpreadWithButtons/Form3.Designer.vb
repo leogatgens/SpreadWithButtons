@@ -32,10 +32,10 @@ Partial Class Form3
         'FpSpread1
         '
         Me.FpSpread1.AccessibleDescription = ""
-        Me.FpSpread1.Location = New System.Drawing.Point(37, 29)
+        Me.FpSpread1.Location = New System.Drawing.Point(12, 12)
         Me.FpSpread1.Name = "FpSpread1"
         Me.FpSpread1.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.FpSpread1_Sheet1})
-        Me.FpSpread1.Size = New System.Drawing.Size(558, 296)
+        Me.FpSpread1.Size = New System.Drawing.Size(932, 562)
         Me.FpSpread1.TabIndex = 0
         '
         'FpSpread1_Sheet1
@@ -45,7 +45,7 @@ Partial Class Form3
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(352, 376)
+        Me.Button1.Location = New System.Drawing.Point(869, 580)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 1
@@ -56,7 +56,7 @@ Partial Class Form3
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(977, 640)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.FpSpread1)
         Me.Name = "Form3"
