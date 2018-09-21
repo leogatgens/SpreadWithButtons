@@ -1,5 +1,8 @@
-﻿Imports FarPoint.Win.Spread
+﻿Imports System.IO
+Imports FarPoint.Excel
+Imports FarPoint.Win.Spread
 Imports FarPoint.Win.Spread.Model
+Imports Microsoft.Office.Interop
 
 Public Class Form1
 
@@ -22,7 +25,7 @@ Public Class Form1
         If fileName IsNot Nothing Then
 
             RegistroInicioProceso()
-            FpSpread1.OpenExcel(fileName, FarPoint.Excel.ExcelOpenFlags.TruncateEmptyRowsAndColumns)
+            FpSpread1.OpenExcel(fileName, FarPoint.Excel.ExcelOpenFlags.TruncateEmptyRowsAndColumns Or FarPoint.Excel.ExcelOpenFlags.DoNotRecalculateAfterLoad)
             'FpSpread1.OpenExcel(fileName)
 
             RegistrarFinProceso()
@@ -70,6 +73,31 @@ Public Class Form1
             RegistrarFinProceso()
         End If
 
+
+    End Sub
+
+    Private Sub ExportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportarToolStripMenuItem.Click
+
+
+        Using cadenaDeMemoria As New MemoryStream()
+            FpSpread1.SaveExcel(cadenaDeMemoria, ExcelSaveFlags.UseOOXMLFormat)
+
+
+
+
+
+            Dim rutaTemporal = IO.Path.GetTempPath()
+            Dim nombreArchivo = "Leo"
+            Dim ruta = IO.Path.Combine(rutaTemporal, nombreArchivo & ".xlsx")
+
+            Using ArchivoEnFlujo = New FileStream(ruta, FileMode.Create, FileAccess.Write)
+                cadenaDeMemoria.WriteTo(ArchivoEnFlujo)
+            End Using
+
+            Dim excel As Excel.Application = New Excel.Application()
+            excel.Workbooks.Open(ruta)
+            excel.Visible = True
+        End Using
 
     End Sub
 End Class

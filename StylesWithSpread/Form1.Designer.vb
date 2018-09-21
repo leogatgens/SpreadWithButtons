@@ -23,20 +23,21 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.AbrirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FormulaTextBox1 = New FarPoint.Win.Spread.FormulaTextBox()
         Me.FpSpread1 = New FarPoint.Win.Spread.FpSpread()
         Me.FpSpread1_Sheet1 = New FarPoint.Win.Spread.SheetView()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.AbrirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QuitarFormulasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FormulaTextBox1 = New FarPoint.Win.Spread.FormulaTextBox()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.ExportarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.MenuStrip1.SuspendLayout()
         CType(Me.FpSpread1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FpSpread1_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -58,20 +59,16 @@ Partial Class Form1
         Me.SplitContainer1.SplitterDistance = 57
         Me.SplitContainer1.TabIndex = 0
         '
-        'MenuStrip1
+        'FormulaTextBox1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AbrirToolStripMenuItem, Me.QuitarFormulasToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(736, 24)
-        Me.MenuStrip1.TabIndex = 0
-        Me.MenuStrip1.Text = "MenuStrip1"
-        '
-        'AbrirToolStripMenuItem
-        '
-        Me.AbrirToolStripMenuItem.Name = "AbrirToolStripMenuItem"
-        Me.AbrirToolStripMenuItem.Size = New System.Drawing.Size(45, 20)
-        Me.AbrirToolStripMenuItem.Text = "Abrir"
+        Me.FormulaTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FormulaTextBox1.Location = New System.Drawing.Point(0, 24)
+        Me.FormulaTextBox1.Multiline = False
+        Me.FormulaTextBox1.Name = "FormulaTextBox1"
+        Me.FormulaTextBox1.Size = New System.Drawing.Size(736, 33)
+        Me.FormulaTextBox1.TabIndex = 1
+        'Attach FormulaTextBox1 to FpSpread1
+        Me.FormulaTextBox1.Attach(Me.FpSpread1)
         '
         'FpSpread1
         '
@@ -88,9 +85,20 @@ Partial Class Form1
         Me.FpSpread1_Sheet1.Reset()
         Me.FpSpread1_Sheet1.SheetName = "Sheet1"
         '
-        'OpenFileDialog1
+        'MenuStrip1
         '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AbrirToolStripMenuItem, Me.QuitarFormulasToolStripMenuItem, Me.ExportarToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(736, 24)
+        Me.MenuStrip1.TabIndex = 0
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'AbrirToolStripMenuItem
+        '
+        Me.AbrirToolStripMenuItem.Name = "AbrirToolStripMenuItem"
+        Me.AbrirToolStripMenuItem.Size = New System.Drawing.Size(45, 20)
+        Me.AbrirToolStripMenuItem.Text = "Abrir"
         '
         'QuitarFormulasToolStripMenuItem
         '
@@ -98,16 +106,15 @@ Partial Class Form1
         Me.QuitarFormulasToolStripMenuItem.Size = New System.Drawing.Size(102, 20)
         Me.QuitarFormulasToolStripMenuItem.Text = "Quitar formulas"
         '
-        'FormulaTextBox1
+        'OpenFileDialog1
         '
-        Me.FormulaTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FormulaTextBox1.Location = New System.Drawing.Point(0, 24)
-        Me.FormulaTextBox1.Multiline = False
-        Me.FormulaTextBox1.Name = "FormulaTextBox1"
-        Me.FormulaTextBox1.Size = New System.Drawing.Size(736, 33)
-        Me.FormulaTextBox1.TabIndex = 1
-        'Attach FormulaTextBox1 to FpSpread1
-        Me.FormulaTextBox1.Attach(Me.FpSpread1)
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'ExportarToolStripMenuItem
+        '
+        Me.ExportarToolStripMenuItem.Name = "ExportarToolStripMenuItem"
+        Me.ExportarToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.ExportarToolStripMenuItem.Text = "Exportar"
         '
         'Form1
         '
@@ -123,10 +130,10 @@ Partial Class Form1
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
         CType(Me.FpSpread1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FpSpread1_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -139,4 +146,5 @@ Partial Class Form1
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents QuitarFormulasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FormulaTextBox1 As FarPoint.Win.Spread.FormulaTextBox
+    Friend WithEvents ExportarToolStripMenuItem As ToolStripMenuItem
 End Class
